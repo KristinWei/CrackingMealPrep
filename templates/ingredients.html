@@ -35,8 +35,8 @@
         <!-- vegetables form -->
         <div class="col">
             <form action="{{url_for('addveg')}}" method="POST">
-                <label for="protein">vegetables: </label>
-                <input type="text" name="vagetables" placeholder="ideal vegetables">
+                <label for="vagetables">vegetables: </label>
+                <input type="text" name="veg" placeholder="ideal vegetables">
                 <input type="submit" value="add">
             </form>
             <ul>
@@ -51,7 +51,7 @@
         <!-- carbohydrates form -->
         <div class="col">
             <form action="{{url_for('addcarb')}}" method="POST">
-                <label for="protein">carbohydrates: </label>
+                <label for="carbohydrates">carbohydrates: </label>
                 <input type="text" name="carbohydrates" placeholder="ideal carbohydrates">
                 <input type="submit" value="add">
             </form>
