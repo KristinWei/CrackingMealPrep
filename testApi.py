@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from urllib.parse import urlparse
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -13,12 +13,17 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ingredient.sqlite"
 db = SQLAlchemy(app)
 
+
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String, unique=False, nullable=False)
     name = db.Column(db.String, unique=True, nullable=False)
 
+# class Recipe(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
 
+
+    
 @app.route('/')
 def index():
     db.session.query(Ingredient).delete()
@@ -55,24 +60,47 @@ def ingredients():
 # ===========================
 # add ingredients routes
 # ===========================
+# 1. check repeated ingredients (DONE)
+# 2. check typo
+# 3. check no result found case
+
 @app.route('/addpro', methods=['POST'])
 def addpro():
+
+
     try:
+        added = request.form['protein']
+        apiID = '1ddd0896'
+        apiKEY = '58ef01156cda25a59462f34755cb565d'
+        proURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
+
+        # typo & no found check
+        foundNum = int(requests.get(proURL).json()['count'])
+        assert foundNum > 0
+
+        # repeated check
         ingredient = Ingredient(type="pro", name=request.form['protein'])
         db.session.add(ingredient)
         db.session.commit()
     except exc.SQLAlchemyError as e:
-        print(type(e))
+        flash('{} has already been added!'.format(added))
+        # print(type(e))
+    except:
+        flash("{} is not a valid input, plase check spelling or pick other protein".format(added))
+
     return redirect(url_for('ingredients'))
+
 
 
 @app.route('/addveg', methods=['POST'])
 def addveg():
     try:
+        added = request.form['vagetables']
         ingredient = Ingredient(type="veg", name=request.form['vagetables'])
         db.session.add(ingredient)
         db.session.commit()
     except exc.SQLAlchemyError as e:
+        flash('{} has been added!'.format(added))
         print(type(e))
     
     return redirect(url_for('ingredients'))
@@ -82,10 +110,12 @@ def addveg():
 @app.route('/addcarb', methods=['POST'])
 def addcarb():
     try:
+        added = request.form['carbohydrates']
         ingredient = Ingredient(type="carb", name=request.form['carbohydrates'])
         db.session.add(ingredient)
         db.session.commit()
     except IntegrityError:
+        flash('{} has been added!'.format(added))
         db.session.rollback()
 
     return redirect(url_for('ingredients'))
@@ -109,6 +139,7 @@ def generate():
     apiKEY = '58ef01156cda25a59462f34755cb565d'
     apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, protein)
     result = requests.get(apiURL).json()
+    
 
     return render_template('generate.html', protein=protein, apiURL=apiURL, result=result)
 
