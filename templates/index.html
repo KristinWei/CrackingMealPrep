@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{{url_for('ingredients')}}">
+
+    <!-- Number of Meals Per Day -->
+    <div class="form-row align-items-center">
+
+        <div class="col-auto my-1">
+            <label >I want </label>
+        </div>
+
+        <div class="col-auto my-1">
+            <select class="custom-select" id="validationCustom01" name="mealNum" required>
+            <option selected disabled value="">Choose...</option>
+            <option>1</option>
+            <option>2</option>
+            </select>
+            <div class="invalid-feedback">
+            Please select a valid number.
+            </div>
+        </div>
+
+        <div class="col-auto my-1">
+            <label >meal(s) per day,</label>
+        </div>
+
+        <div class="col-auto my-1">
+            <select class="custom-select" id="validationCustom01" name="days" required>
+            <option selected disabled value="">Choose...</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            </select>
+            <div class="invalid-feedback">
+            Please select a valid number.
+            </div>
+        </div>
+
+        <div class="col-auto my-1">
+            <label >day(s) a week</label>
+        </div>
+    </div>
+
+    <button class="btn btn-outline-warning float-right" type="submit">Next</a>
+    
+    <!-- end of Number of Meals Per Day -->
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row row-cols-3">
+
+        <!-- protein form -->
+        <div class="col">
+            <form action="{{url_for('addpro')}}" method="POST">
+                <label for="protein">Protein: </label>
+                <input type="text" name="protein" placeholder="ideal protein" required>
+                <input type="submit" value="add">
+            </form>
+            <ul>
+                {% for protein in ingPro %}
+                <li>{{protein.name}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- end of protein form -->
+
+
+        <!-- vegetables form -->
+        <div class="col">
+            <form action="{{url_for('addveg')}}" method="POST">
+                <label for="protein">vegetables: </label>
+                <input type="text" name="vagetables" placeholder="ideal vegetables">
+                <input type="submit" value="add">
+            </form>
+            <ul>
+                {% for vegetables in ingVeg %}
+                <li>{{vegetables.name}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- end of vegetables form -->
+
+
+        <!-- carbohydrates form -->
+        <div class="col">
+            <form action="{{url_for('addcarb')}}" method="POST">
+                <label for="protein">carbohydrates: </label>
+                <input type="text" name="carbohydrates" placeholder="ideal carbohydrates">
+                <input type="submit" value="add">
+            </form>
+            <ul>
+                {% for carbohydrates in ingCarb %}
+                <li>{{carbohydrates.name}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- end of carbohydrates form -->
+
+    </div>
+    <!-- end of the row -->
+</div>
+<!-- end of the container -->
+
+
+
+<form action="{{url_for('generate')}}">
+    <!-- mealNum and days info form -->
+    <div class="form-group invisible">
+        <input type="text" name="mealNum" value="{{mealNum}}">
+        <input type="text" name="days" value="{{days}}">
+    </div>
+    <!-- end of mealNum and days info form -->
+
+    <!--back and generate button -->
+    <a class="btn btn-outline-success float-left" href="/" role="button">Back</a>
+    <button class="btn btn-outline-info float-right" type="submit">Generate</button>
+    <!-- end of back and generate buttons -->
+</form>
+
+
+{% endblock %}
