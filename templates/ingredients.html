@@ -70,19 +70,12 @@
 
 
 
-<form action="{{url_for('generate')}}">
-    <!-- mealNum and days info form -->
-    <div class="form-group invisible">
-        <input type="text" name="mealNum" value="{{mealNum}}">
-        <input type="text" name="days" value="{{days}}">
-    </div>
-    <!-- end of mealNum and days info form -->
 
-    <!--back and generate button -->
-    <a class="btn btn-outline-success float-left" href="/" role="button">Back</a>
-    <button class="btn btn-outline-info float-right" type="submit">Generate</button>
-    <!-- end of back and generate buttons -->
-</form>
+<!--back and generate button -->
+<a class="btn btn-outline-success float-left" href="/" role="button">Back</a>
+<a class="btn btn-outline-info float-right" href="generate" role="button">Generate</a>
+
+<!-- end of back and generate buttons -->
 
 
 {% endblock %}

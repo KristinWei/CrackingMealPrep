@@ -40,3 +40,61 @@
         </div>
     </div>
     <!-- end of days form -->
+
+
+
+    <form action="{{url_for('generate')}}">
+    <!-- mealNum and days info form -->
+    <div class="form-group invisible">
+        <input type="text" name="mealNum" value="{{mealNum}}">
+        <input type="text" name="days" value="{{days}}">
+    </div>
+    <!-- end of mealNum and days info form -->
+
+    <!--back and generate button -->
+    <a class="btn btn-outline-success float-left" href="/" role="button">Back</a>
+    <button class="btn btn-outline-info float-right" type="submit">Generate</button>
+    <!-- end of back and generate buttons -->
+</form>
+
+
+
+
+
+try:
+        mealNum = request.args.get('mealNum')
+        days = request.args.get('days')
+
+        if(mealNum and days):
+            day = int(days)
+            meal = int(mealNum)
+            limit1 = int(days)*int(mealNum)
+            # flash(limit1)
+            limit = Limit(ds=day, ms=meal, limit=limit1)
+                # md = MealandDay(day=day, meal=meal)
+            db.session.add(limit)
+                # db.session.add(md)
+            # db.session.commit()
+            print('====================================')
+            print('====================================')
+            # print(meals)
+            # print(days)
+            print('====================================')
+            print('====================================')
+
+
+        ingPro = Ingredient.query.filter_by(type="pro")
+        ingVeg = Ingredient.query.filter_by(type="veg")
+        ingCarb = Ingredient.query.filter_by(type="carb")
+
+
+    except exc.SQLAlchemyError as e:
+        print(type(e))
+        # return redirect(url_for('generate'))
+
+    except:
+        pass
+        # return redirect(url_for('generate'))
+
+    else:
+        return render_template('ingredients.html', ingPro=ingPro, ingVeg=ingVeg, ingCarb=ingCarb)
