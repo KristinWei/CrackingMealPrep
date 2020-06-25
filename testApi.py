@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exc
 from flask_migrate import Migrate
-import requests
+import requests, random, json, time
 
 app = Flask(__name__)
 
@@ -200,7 +200,7 @@ def addcarb():
         flash('{} has already been added!'.format(added))
     
     except:
-        flash("something wrong here")
+        flash("something wrong here, please add again")
 
     return redirect(url_for('ingredients'))
 
@@ -213,6 +213,9 @@ def addcarb():
 @app.route('/generate', methods=['POST','GET'])
 def generate():
     try:
+        apiID = '1ddd0896'
+        apiKEY = '58ef01156cda25a59462f34755cb565d'
+
         # at least one input check
         pNum = Ingredient.query.filter_by(type="pro").count()
         vNum = Ingredient.query.filter_by(type="veg").count()
@@ -223,10 +226,57 @@ def generate():
         # corresponding days and meals
         mealNum = Limit.query.first().meal
         dayNum = Limit.query.first().day
+        limit = Limit.query.first().limit
+
+        ingDict = generateIngDict()
+        #ingredients list - protein
+        proList = []
+        proDict = {}
+
+        for p in Ingredient.query.filter_by(type="pro").all():
+            # apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, p.name)
+            # result = requests.get(apiURL).json()
+            # ingDict[p.name] = result
+            proList.append(p.name)
+
+        # if( limit // pNum > 1):
+        #     proList = proList*(limit // pNum)
+        # proList += proList[:(limit - pNum)]
+
+        # if(mealNum == 1):
+        #     day = 1
+        #     for pro in proList:
+        #         count = int(ingDict[pro]['count'])
+        #         if count < 14:
+        #             r = random.randint(0, count-1)
+        #         else:
+        #             r = random.randint(0, 13)
+        #         proDict['d{}m1'.format(day)] = ingDict[pro]['hits'][r]['recipe']
+        #         day += 1
+        # else:
+            # day = 1
+            # m = 1
+            # for pro in proList:
+            #     count = int(ingDict[pro]['count'])
+            #     if count < 14:
+            #         r = random.randint(0, count-1)
+            #     else:
+            #         r = random.randint(0, 13)
+                
+            #     if (m == 1):
+            #         proDict['d{}m1'.format(day)] = ingDict[pro]['hits'][r]['recipe']['label']
+            #         m = 2
+            #     else:
+            #         proDict['d{}m2'.format(day)] = ingDict[pro]['hits'][r]['recipe']['label']
+            #         m = 1
+            #         day += 1
+                
+        
+        #ingredients dic - protein
         print('====================================')
         print('====================================')
-        print(mealNum)
-        print(dayNum)
+        print(type(ingDict))
+        print(ingDict)
         print('====================================')
         print('====================================')
         
@@ -236,8 +286,6 @@ def generate():
         # logic process
 
         # making api call
-        apiID = '1ddd0896'
-        apiKEY = '58ef01156cda25a59462f34755cb565d'
         apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, protein)
         result = requests.get(apiURL).json()
 
@@ -245,7 +293,30 @@ def generate():
         flash("at least one input for each category")
         return redirect(url_for('ingredients'))
         
-    return render_template('generate.html', protein=protein, apiURL=apiURL, result=result)
+    return render_template('generate.html', protein=protein, apiURL=apiURL, result=result,  mealNum=mealNum, dayNum=dayNum)
+
+
+
+
+# generate ingredient dictionary by calling api
+def generateIngDict():
+
+    ingDict = {}
+    apiID = '1ddd0896'
+    apiKEY = '58ef01156cda25a59462f34755cb565d'
+
+    for ing in Ingredient.query.all():
+        apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, ing.name)
+        callBack = requests.get(apiURL).json()
+        print(type(callBack))
+        # exceeded limit
+        while('status' in callBack):
+            time.sleep(20)
+            callBack = requests.get(apiURL).json()
+        # success case
+        ingDict[ing.name] = callBack['q']
+
+    return ingDict
 
 
 

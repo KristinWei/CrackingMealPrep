@@ -2,10 +2,6 @@
 
 {% block content %}
 
-<p>User input protein ingredient is:{{protein}}</p>
-<p>apiURL is: {{apiURL}}</p>
-<p>Hits[0] image is:{{ result['hits'][1]['recipe']['image'] }}</p>
-
 
 <!-- ========================= -->
 <!-- Card Display -->
@@ -16,283 +12,314 @@
     <div class="row row-cols-3">
 
         <!-- day1 -->
-        <div col>
-            <p>day1</p>
-        </div>
-
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day1.1</small>
-                </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+        {% if dayNum >= 1 %}
+            <div col>
+                <p>day1</p>
             </div>
-            <!-- end of card -->
-        </div>
 
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day1.2</small>
+            <div class="col card-deck">
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day1.1</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+                <!-- end of card -->
             </div>
-            <!-- end of card -->
-        </div>
+            
+            
+            <div class="col card-deck">
+                {% if mealNum == 2 %}
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day1.2</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of card -->
+            </div>
+            
+        {% endif %}
         <!-- end of day1 -->
 
         <!-- day2 -->
-        <div col>
-            <p>day2</p>
-        </div>
-
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day2.1</small>
-                </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+        {% if dayNum >= 2 %}
+            <div col>
+                <p>day2</p>
             </div>
-            <!-- end of card -->
-        </div>
 
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day2.2</small>
+            <div class="col card-deck">
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day2.1</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+                <!-- end of card -->
             </div>
-            <!-- end of card -->
-        </div>
+
+            
+            <div class="col card-deck">
+                {% if mealNum == 2 %}
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day2.2</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of card -->
+            </div>
+        {% endif %}
         <!-- end of day2 -->
 
         <!-- day3 -->
-        <div col>
-            <p>day3</p>
-        </div>
-
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day3.1</small>
-                </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+        {% if dayNum >= 3 %}
+            <div col>
+                <p>day3</p>
             </div>
-            <!-- end of card -->
-        </div>
 
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day3.2</small>
+            <div class="col card-deck">
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day3.1</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+                <!-- end of card -->
             </div>
-            <!-- end of card -->
-        </div>
+
+            <div class="col card-deck">
+                {% if mealNum == 2 %}
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day2.2</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of card -->
+            </div>
+        {% endif %}
         <!-- end of day3 -->
 
         <!-- day4 -->
-        <div col>
-            <p>day4</p>
-        </div>
-
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day4.1</small>
-                </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+        {% if dayNum >= 4 %}
+            <div col>
+                <p>day4</p>
             </div>
-            <!-- end of card -->
-        </div>
 
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day4.2</small>
+            <div class="col card-deck">
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day4.1</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+                <!-- end of card -->
             </div>
-            <!-- end of card -->
-        </div>
+
+            <div class="col card-deck">
+                {% if mealNum == 2 %}
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day2.2</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of card -->
+            </div>
+        {% endif %}
         <!-- end of day4 -->
 
         <!-- day5 -->
-        <div col>
-            <p>day5</p>
-        </div>
-
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day5.1</small>
-                </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+        {% if dayNum >= 5 %}
+            <div col>
+                <p>day5</p>
             </div>
-            <!-- end of card -->
-        </div>
 
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day5.2</small>
+            <div class="col card-deck">
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day5.1</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+                <!-- end of card -->
             </div>
-            <!-- end of card -->
-        </div>
+
+            <div class="col card-deck">
+                {% if mealNum == 2 %}
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day2.2</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of card -->
+            </div>
+        {% endif %}
         <!-- end of day5 -->
 
         <!-- day6 -->
-        <div col>
-            <p>day6</p>
-        </div>
-
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day6.1</small>
-                </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+        {% if dayNum >= 6 %}
+            <div col>
+                <p>day6</p>
             </div>
-            <!-- end of card -->
-        </div>
 
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day6.2</small>
+            <div class="col card-deck">
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day6.1</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+                <!-- end of card -->
             </div>
-            <!-- end of card -->
-        </div>
+
+            <div class="col card-deck">
+                {% if mealNum == 2 %}
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day2.2</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of card -->
+            </div>
+        {% endif %}
         <!--end of day6 -->
 
         <!-- day7 -->
-        <div col>
-            <p>day7</p>
-        </div>
-
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day7.1</small>
-                </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+        {% if dayNum >= 7 %}
+            <div col>
+                <p>day7</p>
             </div>
-            <!-- end of card -->
-        </div>
 
-        <div class="col card-deck">
-            <div class="card">
-                <div class="card-footer">
-                    <small class="text-muted">day7.2</small>
+            <div class="col card-deck">
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day7.1</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
-                    <p>Ingredients:</p>
-                    {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
-                        <p class="card-text">{{ ingredient }}</p>
-                    {% endfor %}
-                </div>
+                <!-- end of card -->
             </div>
-            <!-- end of card -->
-        </div>
+
+            <div class="col card-deck">
+                {% if mealNum == 2 %}
+                <div class="card">
+                    <div class="card-footer">
+                        <small class="text-muted">day2.2</small>
+                    </div>
+                    <img src="{{ result['hits'][1]['recipe']['image'] }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['hits'][1]['recipe']['label'] }}</h5>
+                        <p>Ingredients:</p>
+                        {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
+                            <p class="card-text">{{ ingredient }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of card -->
+            </div>
+        {% endif %}
         <!-- end of day7 -->
 
     </div>
