@@ -94,18 +94,25 @@ def ingredients():
 def addpro():
     try:
         added = request.form['protein']
-        apiID = '1ddd0896'
-        apiKEY = '58ef01156cda25a59462f34755cb565d'
-        addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
+        # apiID = '1ddd0896'
+        # apiKEY = '58ef01156cda25a59462f34755cb565d'
+        # addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
         # limit check: numer of queries and number of meals
         if( (Limit.query.count()) != 1):
             return redirect(url_for('/'))
         curNum = Ingredient.query.filter_by(type="pro").count()
+
         if(curNum == Limit.query.first().limit):
             raise atMostError
+        # print('=========================')
+        # print('=========================')
+        # print(valid)
+        # print('=========================')
+        # print('=========================')
+
         # typo & no found check
-        foundNum = int(requests.get(addURL).json()['count'])
-        if foundNum < 1:
+        valid = checkValidInput(added)
+        if (not valid):
             raise nofoundError
         # repeated check
         ingredient = Ingredient(type="pro", name=request.form['protein'])
@@ -133,10 +140,6 @@ def addpro():
 def addveg():
     try:
         added = request.form['veg']
-        print(added)
-        apiID = '1ddd0896'
-        apiKEY = '58ef01156cda25a59462f34755cb565d'
-        addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
         # limit check: numer of queries and number of meals
         if( (Limit.query.count()) != 1):
             return redirect(url_for('/'))
@@ -144,8 +147,8 @@ def addveg():
         if(curNum == Limit.query.first().limit):
             raise atMostError
         # typo & no found check
-        foundNum = int(requests.get(addURL).json()['count'])
-        if foundNum == 0:
+        valid = checkValidInput(added)
+        if (not valid):
             raise nofoundError
         # repeated check
         ingredient = Ingredient(type="veg", name=request.form['veg'])
@@ -172,9 +175,6 @@ def addveg():
 def addcarb():
     try:
         added = request.form['carbohydrates']
-        apiID = '1ddd0896'
-        apiKEY = '58ef01156cda25a59462f34755cb565d'
-        addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
         # limit check: numer of queries and number of meals
         if( (Limit.query.count()) != 1):
             return redirect(url_for('/'))
@@ -182,8 +182,8 @@ def addcarb():
         if(curNum == Limit.query.first().limit):
             raise atMostError
         # typo & no found check
-        foundNum = int(requests.get(addURL).json()['count'])
-        if foundNum < 1:
+        valid = checkValidInput(added)
+        if (not valid):
             raise nofoundError
         # repeated check
         ingredient = Ingredient(type="carb", name=request.form['carbohydrates'])
@@ -273,12 +273,7 @@ def generate():
                 
         
         #ingredients dic - protein
-        print('====================================')
-        print('====================================')
-        print(type(ingDict))
-        print(ingDict)
-        print('====================================')
-        print('====================================')
+
         
         # extract request datas
         protein = 'chicken breast'
@@ -294,7 +289,6 @@ def generate():
         return redirect(url_for('ingredients'))
         
     return render_template('generate.html', protein=protein, apiURL=apiURL, result=result,  mealNum=mealNum, dayNum=dayNum)
-
 
 
 
@@ -317,6 +311,30 @@ def generateIngDict():
         ingDict[ing.name] = callBack['q']
 
     return ingDict
+
+
+def checkValidInput(added):
+    apiID = '1ddd0896'
+    apiKEY = '58ef01156cda25a59462f34755cb565d'
+    addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
+
+    callBack = requests.get(addURL).json()
+    while('status' in callBack):
+            print(callBack['status'])
+            # flash("Just one minute, it is almost my turn to get data from server!")
+            displayWait()
+            time.sleep(2)
+            callBack = requests.get(addURL).json()
+
+    count = int(callBack['count'])
+    if count < 1:
+        return False
+    return True
+
+def displayWait():
+    flash("Just one minute, it is almost my turn to get data from server!")
+    return redirect(url_for('ingredients'))
+
 
 
 

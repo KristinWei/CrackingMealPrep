@@ -98,3 +98,42 @@ try:
 
     else:
         return render_template('ingredients.html', ingPro=ingPro, ingVeg=ingVeg, ingCarb=ingCarb)
+
+
+
+try:
+        added = request.form['protein']
+        apiID = '1ddd0896'
+        apiKEY = '58ef01156cda25a59462f34755cb565d'
+        addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
+        # limit check: numer of queries and number of meals
+        if( (Limit.query.count()) != 1):
+            return redirect(url_for('/'))
+        curNum = Ingredient.query.filter_by(type="pro").count()
+
+        if(curNum == Limit.query.first().limit):
+            raise atMostError
+
+        # typo & no found check
+        foundNum = int(requests.get(addURL).json()['count'])
+        if foundNum < 1:
+            raise nofoundError
+        # repeated check
+        ingredient = Ingredient(type="pro", name=request.form['protein'])
+        db.session.add(ingredient)
+        db.session.commit()
+
+    except nofoundError:
+        flash("{} is not a valid input, plase check spelling or pick other protein".format(added))
+    
+    except atMostError:
+        flash("at most {} protein ingredients allow".format(Limit.query.first().limit))
+
+    except exc.SQLAlchemyError as e:
+        flash('{} has already been added!'.format(added))
+    
+    except:
+        pass
+
+    finally:
+        return redirect(url_for('ingredients'))
