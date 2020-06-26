@@ -4,13 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exc
 from flask_migrate import Migrate
-import requests, random, json, time
+import requests, random, json, time, ast
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'hard to guess string'
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ingredient.sqlite"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -25,6 +26,8 @@ class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String, unique=False, nullable=False)
     name = db.Column(db.String, unique=True, nullable=False)
+    datastr = db.Column(db.String, unique=False, nullable=True)
+
 
 class Limit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,6 +61,10 @@ def index():
 
 @app.route('/mealnum', methods=['GET', 'POST'])
 def mealnum():
+
+    db.session.query(Ingredient).delete()
+    db.session.query(Limit).delete()
+    db.session.commit()
 
     if request.method == 'POST':
         mealNum = request.form.get('mealNum')
@@ -94,37 +101,26 @@ def ingredients():
 def addpro():
     try:
         added = request.form['protein']
-        # apiID = '1ddd0896'
-        # apiKEY = '58ef01156cda25a59462f34755cb565d'
-        # addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
-        # limit check: numer of queries and number of meals
-        if( (Limit.query.count()) != 1):
-            return redirect(url_for('/'))
-        curNum = Ingredient.query.filter_by(type="pro").count()
+        tp = "pro"
 
-        if(curNum == Limit.query.first().limit):
+        if( reachAtMost(tp) ):
             raise atMostError
-        # print('=========================')
-        # print('=========================')
-        # print(valid)
-        # print('=========================')
-        # print('=========================')
 
         # typo & no found check
-        valid = checkValidInput(added)
-        if (not valid):
+        if ( not isValidInput(tp, added) ):
             raise nofoundError
-        # repeated check
-        ingredient = Ingredient(type="pro", name=request.form['protein'])
-        db.session.add(ingredient)
-        db.session.commit()
 
-    except nofoundError:
-        flash("{} is not a valid input, plase check spelling or pick other protein".format(added))
+        # repeated check
+        # ingredient = Ingredient(type="pro", name=added)
+        # db.session.add(ingredient)
+        # db.session.commit()
     
     except atMostError:
         flash("at most {} protein ingredients allow".format(Limit.query.first().limit))
 
+    except nofoundError:
+        flash("{} is not a valid input, plase check spelling or pick other protein".format(added))
+    
     except exc.SQLAlchemyError as e:
         flash('{} has already been added!'.format(added))
     
@@ -140,20 +136,17 @@ def addpro():
 def addveg():
     try:
         added = request.form['veg']
+        tp = "veg"
+
+
         # limit check: numer of queries and number of meals
-        if( (Limit.query.count()) != 1):
-            return redirect(url_for('/'))
-        curNum = Ingredient.query.filter_by(type="veg").count()
-        if(curNum == Limit.query.first().limit):
+        if( reachAtMost(tp) ):
             raise atMostError
+
         # typo & no found check
-        valid = checkValidInput(added)
-        if (not valid):
+        if ( not isValidInput(tp, added) ):
             raise nofoundError
         # repeated check
-        ingredient = Ingredient(type="veg", name=request.form['veg'])
-        db.session.add(ingredient)
-        db.session.commit()
 
     except nofoundError:
         flash("{} is not a valid input, plase check spelling or pick other vegetables".format(added))
@@ -175,20 +168,14 @@ def addveg():
 def addcarb():
     try:
         added = request.form['carbohydrates']
+        tp = "carb"
+
         # limit check: numer of queries and number of meals
-        if( (Limit.query.count()) != 1):
-            return redirect(url_for('/'))
-        curNum = Ingredient.query.filter_by(type="carb").count()
-        if(curNum == Limit.query.first().limit):
+        if( reachAtMost(tp) ):
             raise atMostError
         # typo & no found check
-        valid = checkValidInput(added)
-        if (not valid):
+        if ( not isValidInput(tp, added) ):
             raise nofoundError
-        # repeated check
-        ingredient = Ingredient(type="carb", name=request.form['carbohydrates'])
-        db.session.add(ingredient)
-        db.session.commit()
 
     except nofoundError:
         flash("{} is not a valid input, plase check spelling or pick other carbohydrates".format(added))
@@ -291,8 +278,9 @@ def generate():
     return render_template('generate.html', protein=protein, apiURL=apiURL, result=result,  mealNum=mealNum, dayNum=dayNum)
 
 
-
-# generate ingredient dictionary by calling api
+# ===========================
+# helper functions
+# ===========================
 def generateIngDict():
 
     ingDict = {}
@@ -309,35 +297,50 @@ def generateIngDict():
             callBack = requests.get(apiURL).json()
         # success case
         ingDict[ing.name] = callBack['q']
-
     return ingDict
 
 
-def checkValidInput(added):
+def reachAtMost(tp):
+    
+    if( (Limit.query.count()) != 1):
+        return redirect(url_for('mealnum'))
+
+    curNum = Ingredient.query.filter_by(type=tp).count()
+    if(curNum == Limit.query.first().limit):
+        return True
+
+    return False
+
+
+def isValidInput(tp, added):
     apiID = '1ddd0896'
     apiKEY = '58ef01156cda25a59462f34755cb565d'
     addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
 
     callBack = requests.get(addURL).json()
+
     while('status' in callBack):
-            print(callBack['status'])
-            # flash("Just one minute, it is almost my turn to get data from server!")
-            displayWait()
-            time.sleep(2)
+            print("waiting api responses")
+            time.sleep(3)
             callBack = requests.get(addURL).json()
 
     count = int(callBack['count'])
-    if count < 1:
-        return False
-    return True
 
-def displayWait():
-    flash("Just one minute, it is almost my turn to get data from server!")
-    return redirect(url_for('ingredients'))
-
-
+    if count > 0:
+        datastr = json.dumps(callBack)
+        ingredient = Ingredient(type=tp, name=added, datastr=datastr)
+        db.session.add(ingredient)
+        db.session.commit()
+        return True
+    return False
 
 
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
+
+    # print('=========================')
+    # print('=========================')
+    # print(count)
+    # print('=========================')
+    # print('=========================')
