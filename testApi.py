@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exc
 from flask_migrate import Migrate
+from helpers import *
 import requests, random, json, time, ast
 
 app = Flask(__name__)
@@ -45,26 +46,20 @@ class atLeastError(Exception):
 class atMostError(Exception):
     pass
 
+
 # ==================
 # handle routers
 # ==================
-
 @app.route('/')
 def index():
-
-    db.session.query(Ingredient).delete()
-    db.session.query(Limit).delete()
-    db.session.commit()
+    deleteAllData(db, Ingredient, Limit)
 
     return render_template('index.html')
 
 
 @app.route('/mealnum', methods=['GET', 'POST'])
 def mealnum():
-
-    db.session.query(Ingredient).delete()
-    db.session.query(Limit).delete()
-    db.session.commit()
+    deleteAllData(db, Ingredient, Limit)
 
     if request.method == 'POST':
         mealNum = request.form.get('mealNum')
@@ -103,17 +98,12 @@ def addpro():
         added = request.form['protein']
         tp = "pro"
 
-        if( reachAtMost(tp) ):
+        if( reachAtMost(tp, Ingredient, Limit) ):
             raise atMostError
 
         # typo & no found check
-        if ( not isValidInput(tp, added) ):
+        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
             raise nofoundError
-
-        # repeated check
-        # ingredient = Ingredient(type="pro", name=added)
-        # db.session.add(ingredient)
-        # db.session.commit()
     
     except atMostError:
         flash("at most {} protein ingredients allow".format(Limit.query.first().limit))
@@ -125,7 +115,7 @@ def addpro():
         flash('{} has already been added!'.format(added))
     
     except:
-        pass
+        redirect(url_for('mealnum'))
 
     finally:
         return redirect(url_for('ingredients'))
@@ -138,13 +128,12 @@ def addveg():
         added = request.form['veg']
         tp = "veg"
 
-
         # limit check: numer of queries and number of meals
-        if( reachAtMost(tp) ):
+        if( reachAtMost(tp, Ingredient, Limit) ):
             raise atMostError
 
         # typo & no found check
-        if ( not isValidInput(tp, added) ):
+        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
             raise nofoundError
         # repeated check
 
@@ -158,7 +147,7 @@ def addveg():
         flash('{} has already been added!'.format(added))
     
     except:
-        pass
+        redirect(url_for('mealnum'))
 
     return redirect(url_for('ingredients'))
 
@@ -171,10 +160,10 @@ def addcarb():
         tp = "carb"
 
         # limit check: numer of queries and number of meals
-        if( reachAtMost(tp) ):
+        if( reachAtMost(tp, Ingredient, Limit) ):
             raise atMostError
         # typo & no found check
-        if ( not isValidInput(tp, added) ):
+        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
             raise nofoundError
 
     except nofoundError:
@@ -187,7 +176,7 @@ def addcarb():
         flash('{} has already been added!'.format(added))
     
     except:
-        flash("something wrong here, please add again")
+        redirect(url_for('mealnum'))
 
     return redirect(url_for('ingredients'))
 
@@ -195,40 +184,17 @@ def addcarb():
 # ===========================
 # End of add ingredients routes
 # ===========================
-
-
 @app.route('/generate', methods=['POST','GET'])
 def generate():
     try:
         apiID = '1ddd0896'
         apiKEY = '58ef01156cda25a59462f34755cb565d'
 
-        # at least one input check
-        pNum = Ingredient.query.filter_by(type="pro").count()
-        vNum = Ingredient.query.filter_by(type="veg").count()
-        cNum = Ingredient.query.filter_by(type="carb").count()
-        if(pNum == 0 or vNum == 0 or cNum == 0):
+        if( not atLeastOne(Ingredient) ):
             raise atLeastError
         
-        # corresponding days and meals
-        mealNum = Limit.query.first().meal
-        dayNum = Limit.query.first().day
-        limit = Limit.query.first().limit
-
-        ingDict = generateIngDict()
-        #ingredients list - protein
-        proList = []
-        proDict = {}
-
-        for p in Ingredient.query.filter_by(type="pro").all():
-            # apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, p.name)
-            # result = requests.get(apiURL).json()
-            # ingDict[p.name] = result
-            proList.append(p.name)
-
-        # if( limit // pNum > 1):
-        #     proList = proList*(limit // pNum)
-        # proList += proList[:(limit - pNum)]
+        # ingDict = generateIngDict1(Ingredient)
+        # proDict = {}
 
         # if(mealNum == 1):
         #     day = 1
@@ -259,8 +225,6 @@ def generate():
             #         day += 1
                 
         
-        #ingredients dic - protein
-
         
         # extract request datas
         protein = 'chicken breast'
@@ -277,62 +241,6 @@ def generate():
         
     return render_template('generate.html', protein=protein, apiURL=apiURL, result=result,  mealNum=mealNum, dayNum=dayNum)
 
-
-# ===========================
-# helper functions
-# ===========================
-def generateIngDict():
-
-    ingDict = {}
-    apiID = '1ddd0896'
-    apiKEY = '58ef01156cda25a59462f34755cb565d'
-
-    for ing in Ingredient.query.all():
-        apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, ing.name)
-        callBack = requests.get(apiURL).json()
-        print(type(callBack))
-        # exceeded limit
-        while('status' in callBack):
-            time.sleep(20)
-            callBack = requests.get(apiURL).json()
-        # success case
-        ingDict[ing.name] = callBack['q']
-    return ingDict
-
-
-def reachAtMost(tp):
-    
-    if( (Limit.query.count()) != 1):
-        return redirect(url_for('mealnum'))
-
-    curNum = Ingredient.query.filter_by(type=tp).count()
-    if(curNum == Limit.query.first().limit):
-        return True
-
-    return False
-
-
-def isValidInput(tp, added):
-    apiID = '1ddd0896'
-    apiKEY = '58ef01156cda25a59462f34755cb565d'
-    addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}".format(apiID, apiKEY, added)
-
-    callBack = requests.get(addURL).json()
-
-    while('status' in callBack):
-            print("waiting api responses")
-            time.sleep(3)
-            callBack = requests.get(addURL).json()
-
-    count = int(callBack['count'])
-
-    if count > 0:
-        datastr = json.dumps(callBack)
-        ingredient = Ingredient(type=tp, name=added, datastr=datastr)
-        db.session.add(ingredient)
-        db.session.commit()
-        return True
-    return False
 
 
 if __name__ == "__main__":
