@@ -18,8 +18,6 @@ db = SQLAlchemy(app)
 
 Migrate(app, db)
 
-
-
 # ==================
 # class section
 # ==================
@@ -52,8 +50,8 @@ class atMostError(Exception):
 # ==================
 @app.route('/')
 def index():
-    deleteAllData(db, Ingredient, Limit)
 
+    deleteAllData(db, Ingredient, Limit)
     return render_template('index.html')
 
 
@@ -101,7 +99,7 @@ def addpro():
         if( reachAtMost(tp, Ingredient, Limit) ):
             raise atMostError
 
-        # typo & no found check
+        # typo & no found & repeat check
         if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
             raise nofoundError
     
@@ -121,7 +119,6 @@ def addpro():
         return redirect(url_for('ingredients'))
     
 
-
 @app.route('/addveg', methods=['POST'])
 def addveg():
     try:
@@ -132,10 +129,9 @@ def addveg():
         if( reachAtMost(tp, Ingredient, Limit) ):
             raise atMostError
 
-        # typo & no found check
+        # typo & no found & repeat check
         if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
             raise nofoundError
-        # repeated check
 
     except nofoundError:
         flash("{} is not a valid input, plase check spelling or pick other vegetables".format(added))
@@ -152,7 +148,6 @@ def addveg():
     return redirect(url_for('ingredients'))
 
 
-
 @app.route('/addcarb', methods=['POST'])
 def addcarb():
     try:
@@ -162,7 +157,7 @@ def addcarb():
         # limit check: numer of queries and number of meals
         if( reachAtMost(tp, Ingredient, Limit) ):
             raise atMostError
-        # typo & no found check
+        # typo & no found & repeat check
         if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
             raise nofoundError
 
@@ -189,57 +184,29 @@ def generate():
     try:
         apiID = '1ddd0896'
         apiKEY = '58ef01156cda25a59462f34755cb565d'
+        protein = 'chicken breast'
+        apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, protein)
+        result = requests.get(apiURL).json()
 
         if( not atLeastOne(Ingredient) ):
             raise atLeastError
-        
-        # ingDict = generateIngDict1(Ingredient)
-        # proDict = {}
 
-        # if(mealNum == 1):
-        #     day = 1
-        #     for pro in proList:
-        #         count = int(ingDict[pro]['count'])
-        #         if count < 14:
-        #             r = random.randint(0, count-1)
-        #         else:
-        #             r = random.randint(0, 13)
-        #         proDict['d{}m1'.format(day)] = ingDict[pro]['hits'][r]['recipe']
-        #         day += 1
-        # else:
-            # day = 1
-            # m = 1
-            # for pro in proList:
-            #     count = int(ingDict[pro]['count'])
-            #     if count < 14:
-            #         r = random.randint(0, count-1)
-            #     else:
-            #         r = random.randint(0, 13)
-                
-            #     if (m == 1):
-            #         proDict['d{}m1'.format(day)] = ingDict[pro]['hits'][r]['recipe']['label']
-            #         m = 2
-            #     else:
-            #         proDict['d{}m2'.format(day)] = ingDict[pro]['hits'][r]['recipe']['label']
-            #         m = 1
-            #         day += 1
-                
+        proRecipes = recipeDict(Ingredient, Limit, 'pro')
+        print("==============")
+        print(proRecipes)
+        print("==============")
+        vegRecipes = recipeDict(Ingredient, Limit, 'veg')
+        carbRecipes = recipeDict(Ingredient, Limit, 'carb')
         
-        
-        # extract request datas
-        protein = 'chicken breast'
-        
-        # logic process
-
-        # making api call
-        apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, protein)
-        result = requests.get(apiURL).json()
 
     except atLeastError:
         flash("at least one input for each category")
         return redirect(url_for('ingredients'))
         
-    return render_template('generate.html', protein=protein, apiURL=apiURL, result=result,  mealNum=mealNum, dayNum=dayNum)
+    return render_template('generate.html', protein=protein, apiURL=apiURL, result=result,  mealNum=mealNum(Limit), dayNum=dayNum(Limit))
+
+
+
 
 
 
@@ -247,8 +214,4 @@ if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
 
-    # print('=========================')
-    # print('=========================')
-    # print(count)
-    # print('=========================')
-    # print('=========================')
+ 
