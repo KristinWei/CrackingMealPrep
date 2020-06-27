@@ -1,4 +1,4 @@
-import requests, json, random
+import requests, json, random, time
 
 def deleteAllData(db, Ingredient, Limit):
     db.session.query(Ingredient).delete()
@@ -37,7 +37,8 @@ def isValidInput(tp, added, db, Ingredient, Limit):
     # reach hit limit
     while('status' in callBack):
             print("waiting api responses")
-            time.sleep(3)
+            print(callBack['status'])
+            time.sleep(2)
             callBack = requests.get(addURL).json()
 
     count = int(callBack['count'])
@@ -50,24 +51,6 @@ def isValidInput(tp, added, db, Ingredient, Limit):
         return True
     # invalide input
     return False
-
-
-
-    ingDict = {}
-    apiID = '1ddd0896'
-    apiKEY = '58ef01156cda25a59462f34755cb565d'
-
-    for ing in Ingredient.query.all():
-        apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, ing.name)
-        callBack = requests.get(apiURL).json()
-        print(type(callBack))
-        # exceeded limit
-        while('status' in callBack):
-            time.sleep(20)
-            callBack = requests.get(apiURL).json()
-        # success case
-        ingDict[ing.name] = callBack['q']
-    return ingDict
 
 
 def count(Ingredient, tp):
@@ -123,7 +106,7 @@ def oneMealDict(Ingredient, Limit, tpList):
         
         if(day <= dayNum(Limit)):
             # store recipe label for now
-            result['d{}m1'.format(day)] = data['hits'][r]['recipe']['label']
+            result['d{}m1'.format(day)] = data['hits'][r]['recipe']
             day += 1
 
     return result
@@ -145,10 +128,10 @@ def twoMealDict(Ingredient, Limit, tpList):
         # generate recipe
         if(day <= dayNum(Limit)):
             if( m == 1):
-                result['d{}m1'.format(day)] = data['hits'][r]['recipe']['label']
+                result['d{}m1'.format(day)] = data['hits'][r]['recipe']
                 m = 2
             else:
-                result['d{}m2'.format(day)] = data['hits'][r]['recipe']['label']
+                result['d{}m2'.format(day)] = data['hits'][r]['recipe']
                 m = 1
                 day += 1
         

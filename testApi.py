@@ -191,22 +191,15 @@ def generate():
         if( not atLeastOne(Ingredient) ):
             raise atLeastError
 
-        proRecipes = recipeDict(Ingredient, Limit, 'pro')
-        print("==============")
-        print(proRecipes)
-        print("==============")
-        vegRecipes = recipeDict(Ingredient, Limit, 'veg')
-        carbRecipes = recipeDict(Ingredient, Limit, 'carb')
-        
+        proRcp = recipeDict(Ingredient, Limit, 'pro')
+        vegRcp = recipeDict(Ingredient, Limit, 'veg')
+        carbRcp = recipeDict(Ingredient, Limit, 'carb')
 
     except atLeastError:
         flash("at least one input for each category")
         return redirect(url_for('ingredients'))
         
-    return render_template('generate.html', protein=protein, apiURL=apiURL, result=result,  mealNum=mealNum(Limit), dayNum=dayNum(Limit))
-
-
-
+    return render_template('generate.html', mealNum=mealNum(Limit), dayNum=dayNum(Limit), pr=proRcp, vr=vegRcp, cr=carbRcp)
 
 
 
