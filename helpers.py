@@ -31,7 +31,7 @@ def atLeastOne(Ingredient):
 def isValidInput(tp, added, db, Ingredient, Limit):
     apiID = '1ddd0896'
     apiKEY = '58ef01156cda25a59462f34755cb565d'
-    addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=20".format(apiID, apiKEY, added)
+    addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=100".format(apiID, apiKEY, added)
 
     callBack = requests.get(addURL).json()
     # reach hit limit
@@ -86,10 +86,10 @@ def generateList(Ingredient, Limit, tp):
 
 
 def randomNum(count):
-    if count < 20:
+    if count < 100:
         r = random.randint(0, count-1)
     else:
-        r = random.randint(0, 19)
+        r = random.randint(0, 99)
     return r
 
 

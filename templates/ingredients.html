@@ -15,12 +15,12 @@
 
 <div class="container">
     <div class="row row-cols-3">
-
+        <!-- <form action="{{url_for('add')}}" method="POST"> -->
         <!-- protein form -->
         <div class="col">
-            <form action="{{url_for('addpro')}}" method="POST">
+            <form action="{{url_for('add')}}" method="POST">
                 <label for="protein">Protein: </label>
-                <input type="text" name="protein" placeholder="ideal protein" required>
+                <input type="text" name="pro" placeholder="ideal protein" required>
                 <input type="submit" value="add">
             </form>
             <ul>
@@ -34,7 +34,7 @@
 
         <!-- vegetables form -->
         <div class="col">
-            <form action="{{url_for('addveg')}}" method="POST">
+            <form action="{{url_for('add')}}" method="POST">
                 <label for="vagetables">vegetables: </label>
                 <input type="text" name="veg" placeholder="ideal vegetables">
                 <input type="submit" value="add">
@@ -50,9 +50,9 @@
 
         <!-- carbohydrates form -->
         <div class="col">
-            <form action="{{url_for('addcarb')}}" method="POST">
+            <form action="{{url_for('add')}}" method="POST">
                 <label for="carbohydrates">carbohydrates: </label>
-                <input type="text" name="carbohydrates" placeholder="ideal carbohydrates">
+                <input type="text" name="carb" placeholder="ideal carbohydrates">
                 <input type="submit" value="add">
             </form>
             <ul>
@@ -62,8 +62,8 @@
             </ul>
         </div>
         <!-- end of carbohydrates form -->
-
-    </div>
+        </form>
+    <!-- </div> -->
     <!-- end of the row -->
 </div>
 <!-- end of the container -->

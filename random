@@ -147,3 +147,91 @@ $ flask db upgrade     # To apply all the changes.
                         <!-- {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
                             <p class="card-text">{{ ingredient }}</p>
                         {% endfor %} -->
+
+@app.route('/addpro', methods=['POST'])
+def addpro():
+    try:
+        added = request.form['protein']
+        print(type(added))
+        # print(type(request.form['veg']))
+        tp = "pro"
+
+        if( reachAtMost(tp, Ingredient, Limit) ):
+            raise atMostError
+
+        # typo & no found & repeat check
+        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
+            raise nofoundError
+    
+    except atMostError:
+        flash("at most {} protein ingredients allow".format(Limit.query.first().limit))
+
+    except nofoundError:
+        flash("{} is not a valid input, plase check spelling or pick other protein".format(added))
+    
+    except exc.SQLAlchemyError as e:
+        flash('{} has already been added!'.format(added))
+    
+    except:
+        redirect(url_for('mealnum'))
+
+    finally:
+        return redirect(url_for('ingredients'))
+    
+
+@app.route('/addveg', methods=['POST'])
+def addveg():
+    try:
+        added = request.form['veg']
+        tp = "veg"
+
+        # limit check: numer of queries and number of meals
+        if( reachAtMost(tp, Ingredient, Limit) ):
+            raise atMostError
+
+        # typo & no found & repeat check
+        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
+            raise nofoundError
+
+    except nofoundError:
+        flash("{} is not a valid input, plase check spelling or pick other vegetables".format(added))
+    
+    except atMostError:
+        flash("at most {} vegetabels ingredients allowed".format(Limit.query.first().limit))
+
+    except exc.SQLAlchemyError as e:
+        flash('{} has already been added!'.format(added))
+    
+    except:
+        redirect(url_for('mealnum'))
+
+    return redirect(url_for('ingredients'))
+
+
+@app.route('/addcarb', methods=['POST'])
+def addcarb():
+    try:
+        added = request.form['carbohydrates']
+        tp = "carb"
+
+        # limit check: numer of queries and number of meals
+        if( reachAtMost(tp, Ingredient, Limit) ):
+            raise atMostError
+        # typo & no found & repeat check
+        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
+            raise nofoundError
+
+    except nofoundError:
+        flash("{} is not a valid input, plase check spelling or pick other carbohydrates".format(added))
+    
+    except atMostError:
+        flash("at most {} carbohydrates ingredients allowed".format(Limit.query.first().limit))
+
+    except exc.SQLAlchemyError as e:
+        flash('{} has already been added!'.format(added))
+    
+    except:
+        redirect(url_for('mealnum'))
+
+    return redirect(url_for('ingredients'))
+

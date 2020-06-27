@@ -87,15 +87,22 @@ def ingredients():
 # ===========================
 # add ingredients routes
 # ===========================
-# 1. check repeated ingredients (DONE)
-# 2. check typo (DONE)
-# 3. check no result found case (DONE)
-@app.route('/addpro', methods=['POST'])
-def addpro():
-    try:
-        added = request.form['protein']
-        tp = "pro"
 
+@app.route('/add', methods=['POST'])
+def add():
+    try:
+        if 'pro' in request.form:
+            added = request.form['pro']
+            tp = "pro"
+            print(added)
+        elif 'veg' in request.form:
+            added = request.form['veg']
+            tp = "veg"
+        else:
+            added = request.form['carb']
+            tp = "carb"
+
+        # maximum inputs check
         if( reachAtMost(tp, Ingredient, Limit) ):
             raise atMostError
 
@@ -117,63 +124,6 @@ def addpro():
 
     finally:
         return redirect(url_for('ingredients'))
-    
-
-@app.route('/addveg', methods=['POST'])
-def addveg():
-    try:
-        added = request.form['veg']
-        tp = "veg"
-
-        # limit check: numer of queries and number of meals
-        if( reachAtMost(tp, Ingredient, Limit) ):
-            raise atMostError
-
-        # typo & no found & repeat check
-        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
-            raise nofoundError
-
-    except nofoundError:
-        flash("{} is not a valid input, plase check spelling or pick other vegetables".format(added))
-    
-    except atMostError:
-        flash("at most {} vegetabels ingredients allowed".format(Limit.query.first().limit))
-
-    except exc.SQLAlchemyError as e:
-        flash('{} has already been added!'.format(added))
-    
-    except:
-        redirect(url_for('mealnum'))
-
-    return redirect(url_for('ingredients'))
-
-
-@app.route('/addcarb', methods=['POST'])
-def addcarb():
-    try:
-        added = request.form['carbohydrates']
-        tp = "carb"
-
-        # limit check: numer of queries and number of meals
-        if( reachAtMost(tp, Ingredient, Limit) ):
-            raise atMostError
-        # typo & no found & repeat check
-        if ( not isValidInput(tp, added, db, Ingredient, Limit) ):
-            raise nofoundError
-
-    except nofoundError:
-        flash("{} is not a valid input, plase check spelling or pick other carbohydrates".format(added))
-    
-    except atMostError:
-        flash("at most {} carbohydrates ingredients allowed".format(Limit.query.first().limit))
-
-    except exc.SQLAlchemyError as e:
-        flash('{} has already been added!'.format(added))
-    
-    except:
-        redirect(url_for('mealnum'))
-
-    return redirect(url_for('ingredients'))
 
 
 # ===========================
@@ -182,12 +132,6 @@ def addcarb():
 @app.route('/generate', methods=['POST','GET'])
 def generate():
     try:
-        apiID = '1ddd0896'
-        apiKEY = '58ef01156cda25a59462f34755cb565d'
-        protein = 'chicken breast'
-        apiURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=14".format(apiID, apiKEY, protein)
-        result = requests.get(apiURL).json()
-
         if( not atLeastOne(Ingredient) ):
             raise atLeastError
 
