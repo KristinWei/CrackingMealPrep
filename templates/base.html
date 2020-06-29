@@ -7,34 +7,38 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> -->
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+    {% block head %}
+    {% endblock %}
     
     <title>WhatToMealPrep</title>
   </head>
   <body>
 
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light" id="nav-head">
       <a class="navbar-brand" href="/">
         <img src="{{url_for('static', filename='icon2.jpg')}}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
         Cracking Meal Prep
       </a>
     </nav>
 
-    <div class="container" id="container">
+   
 
-      <div class="jumbotron">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
           <h1 class="display-4">Cracking Meal Prep</h1>
           <!-- <a href="/mealnum" class="btn btn-outline-info float-right" role="button">Start Meal Prep Plan</a> -->
           <p class="lead">Easier meal prep every week</p>
           <hr class="my-4">
           <img src="{{url_for('static', filename='icon5.jpg')}}" width="100%" height="250px" style="object-fit: cover; border-radius: 10%" class="d-inline-block align-top" alt="" loading="lazy">
+        </div>
       </div>
         {% block content %}
 
         {% endblock %}
 
-    </div>
+    
 
 
     <!-- Optional JavaScript -->

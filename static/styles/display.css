@@ -1,0 +1,30 @@
+.nav-pills .nav-link.active {
+  background-color:rgb(239, 239, 245);
+}
+
+.show-recipe img {
+  filter: grayscale(5%) brightness(90%);
+}
+
+.show-recipe p {
+  opacity: 0;
+}
+
+.show-recipe:hover p {
+  opacity: 1;
+}
+
+.show-recipe:hover img {
+  filter: grayscale(40%) brightness(70%) blur(2px);
+}
+
+.show-src img{
+  filter: grayscale(70%) blur(2px);
+}
+
+
+
+
+
+
+

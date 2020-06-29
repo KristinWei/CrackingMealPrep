@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/display.css') }}">
+{% endblock %}
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/display.css') }}"> -->
+
 {% block content %}
 
 
@@ -7,104 +12,623 @@
 <!-- Card Display -->
 <!-- ========================= -->
 
-<div class="contianer">
 
-    <div>
-        <a class="btn btn-outline-secondary float-right btn-lg" href="generate" role="button">Generate New</a>
+<div class="container">
+
+<!-- ========== -->
+<!-- day1 -->
+<!-- ========== -->
+{% if dayNum >= 1 %}
+
+    <!-- day 1 meal 1 -->
+    <div class="row mb-1">
+        <div class="col-2 p-0">
+                <button type="button" class="btn btn-outline-secondary" style="width: 60px; height: 60px;">DAY 1</button>
+                <p><span class="material-icons ml-3 mt-2">
+                    local_dining
+                    <!-- wb_sunny -->
+                    <!-- today -->
+                    </span>
+                </p>
+        </div>
+
+        <div class="col-10 bg-light border rounded">
+
+            <div class="row">
+
+                <div class="col-2">
+                    <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active text-secondary mt-1 mb-1" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">MEAL ONE</a>
+                        <a class="border-left border-secondary rounded-0 ml-2 nav-link text-secondary" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">  protein</a>
+                        <a class="border-left border-secondary rounded-0 ml-2 nav-link text-secondary" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> vegetables</a>
+                        <a class="border-left border-secondary rounded-0 ml-2 nav-link text-secondary" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"> carbohydrates</a>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <!-- OVERVIEW tab -->
+                        <div class="tab-pane fade show active p-2 border" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            <!-- OVERVIEW tab -->
+                            <div class="container-fluid row">
+                                <!-- protein view -->
+                                <div class="col-4 p-0 border-secondary">
+
+                                    <div id="carouselPro11" class="carousel slide" data-ride="carousel" data-interval="false">
+                                        <!-- indicator -->
+                                        <ol class="carousel-indicators">
+                                          <li data-target="#carouselPro11" data-slide-to="0" class="active"></li>
+                                          <li data-target="#carouselPro11" data-slide-to="1"></li>
+                                        </ol>
+                                        <!-- inner -->
+                                        <div class="carousel-inner">
+                                        
+                                          <div class="carousel-item active show-recipe">
+                                            <img src="{{ pr['d1m1']['image'] }}" class="d-block w-100 rounded" alt="...">
+                                            <div class="carousel-caption d-none d-md-block ">
+                                              <p><strong>{{ pr['d1m1']['label'] }}</strong></p>
+                                            </div>
+                                          </div>
+
+                                          <div class="carousel-item show-src">
+                                            <img src="{{url_for('static', filename='pro2.png')}}" class="d-block w-100">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <p> Ingredient </p>
+                                                <h4>Chicken Breast</h4>
+                                                <span class="badge badge-pill badge-light mt-3 mb-4">Protein</span>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <a class="carousel-control-prev" href="#carouselPro11" role="button" data-slide="prev">
+                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselPro11" role="button" data-slide="next">
+                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <!-- vegetables view -->
+                                <div class="col-4 p-0 border-success">
+
+                                    <div id="carouselVeg11" class="carousel slide" data-ride="carousel" data-interval="false">
+                                        <ol class="carousel-indicators">
+                                          <li data-target="#carouselVeg11" data-slide-to="0" class="active"></li>
+                                          <li data-target="#carouselVeg11" data-slide-to="1"></li>
+                                        </ol>
+                                        <div class="carousel-inner">
+                                          <div class="carousel-item active show-recipe">
+                                            <img src="{{ vr['d1m1']['image'] }}" class="d-block w-100 rounded" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                              <p><strong>{{ vr['d1m1']['label'] }}</strong></p>
+                                            </div>
+                                          </div>
+                                          <div class="carousel-item show-src">
+                                            <img src="{{url_for('static', filename='veg1.png')}}" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <p>- Ingredient -</p>
+                                                <h4>Chicken Breast</h4>
+                                                <span class="badge badge-pill badge-light mt-3 mb-4">Vegetables</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselVeg11" role="button" data-slide="prev">
+                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselVeg11" role="button" data-slide="next">
+                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                    
+                                </div>
+                                <!-- carbohydrates view -->
+                                <div class="col-4 p-0 border-info">
+
+                                    <div id="carouselCarb11" class="carousel slide" data-ride="carousel" data-interval="false">
+                                        <ol class="carousel-indicators">
+                                          <li data-target="#carouselCarb11" data-slide-to="0" class="active"></li>
+                                          <li data-target="#carouselCarb11" data-slide-to="1"></li>
+                                        </ol>
+                                        <div class="carousel-inner">
+                                          <div class="carousel-item active show-recipe">
+                                            <img src="{{ cr['d1m1']['image'] }}" class="d-block w-100 rounded" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                              <p><strong>{{ cr['d1m1']['label'] }}</strong></p>
+                                            </div>
+                                          </div>
+                                          <div class="carousel-item show-src">
+                                            <img src="{{url_for('static', filename='carb2.png')}}" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <p>- Ingredient -</p>
+                                                <h4>Chicken Breast</h4>
+                                                <span class="badge badge-pill badge-light mt-3 mb-4">Carbohydrates</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselCarb11" role="button" data-slide="prev">
+                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselCarb11" role="button" data-slide="next">
+                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- protein tab -->
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+                            <div class="card mt-1 mb-1" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ cr['d1m1']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ pr['d1m1']['label']}}</h6>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- vegetables tab -->
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+
+                            <div class="card mb-3" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ vr['d1m1']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ vr['d1m1']['label']}}</h6>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- carbohydrates tab -->
+                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+
+                            <div class="card mb-3" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ cr['d1m1']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ cr['d1m1']['label']}}</h6>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>  
+
+        </div>
     </div>
+    <!-- end of day1 meal 1 -->
 
-    <div class="row row-cols-3">
+    <!-- day 1 meal 2 -->
+    {% if mealNum == 2 %}
+    <div class="row mb-1">
 
-        <!-- day1 -->
-        {% if dayNum >= 1 %}
-            <div col>
-                <p>day1</p>
+        <div class="col-2">
+            <!-- <span class="material-icons ml-3"> -->
+                <!-- local_dining -->
+                <!-- wb_sunny -->
+                <!-- today -->
+                <!-- </span> -->
+        </div>
+        
+        <div class="col-10">
+            <div class="card">
+                <div class="card-header">
+                Meal Two
+                </div>
+                <div class="card-body bg-light">
+                    <div class="row ml-1 mr-1 ">
+                        <div class="col-2">
+                            <div class="nav flex-column nav-pills mt-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active text-secondary mt-1" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">OVERVIEW</a>
+                                <a class="nav-link text-secondary mt-1" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">  protein</a>
+                                <a class="nav-link text-secondary mt-1" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> vegetables</a>
+                                <a class="nav-link text-secondary mt-1" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"> carbohydrates</a>
+                            </div>
+                        </div>
+        
+                        <div class="col-10">
+                            <div class="tab-content border" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                    <div class="card-deck">
+                                        <div class="card">
+                                        <img src="{{ pr['d1m2']['image'] }}" class="card-img-top p-1 rounded" alt="...">
+                                        <!-- <div class="card-body">
+                                            <h6 class="card-title font-weight-normal">{{ pr['d1m2']['label']}}</h6>
+                                        </div> -->
+                                        <div class="card-footer">
+                                            <small class="text-muted">{{ pr['d1m2']['label']}}</small>
+                                        </div>
+                                        </div>
+                                        <div class="card">
+                                        <img src="{{ vr['d1m2']['image'] }}" class="card-img-top p-1 rounded" alt="...">
+                                        <div class="card-body">
+                                            <h6 class="card-title">{{ vr['d1m2']['label']}}</h6>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">Last updated 3 mins ago</small>
+                                        </div>
+                                        </div>
+                                        <div class="card">
+                                        <img src="{{ cr['d1m2']['image'] }}" class="card-img-top p-1 rounded alt="...">
+                                        <div class="card-body">
+                                            <h6 class="card-title">{{ cr['d1m2']['label']}}</h6>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">Last updated 3 mins ago</small>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+                                    <div class="card" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img src="{{ pr['d1m2']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title">{{ pr['d1m2']['label']}}</h6>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+
+                                    <div class="card" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img src="{{ vr['d1m2']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title">{{ vr['d1m2']['label']}}</h6>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+
+                                    <div class="card" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img src="{{ cr['d1m2']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title">{{ cr['d1m2']['label']}}</h6>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
             </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- end of day 1 meal 2 -->
 
-            <div class="col card-deck">
-                <div class="card">
-                    <div class="card-footer">
-                        <small class="text-muted">day1.1</small>
+{% endif %}
+<!-- ========== -->
+<!-- End day1 -->
+<!-- ========== -->
+
+
+<!-- ========== -->
+<!-- day2 -->
+<!-- ========== -->
+{% if dayNum >= 2 %}
+
+    <!-- day 2 meal 1 -->
+    <div class="row mb-1 border">
+        <div class="col-1">
+                <button type="button" class="btn btn-outline-secondary mb-2">DAY 2</button>
+                <span class="material-icons ml-3">
+                    local_dining
+                    <!-- wb_sunny -->
+                    <!-- today -->
+                    </span>
+        </div>
+        <div class="col-11 bg-light border rounded">
+
+            <div class="row">
+                <div class="col-2 border">
+                    <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active text-secondary mt-1" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">OVERVIEW</a>
+                        <a class="nav-link text-secondary mt-1" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">  protein</a>
+                        <a class="nav-link text-secondary mt-1" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> vegetables</a>
+                        <a class="nav-link text-secondary mt-1" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"> carbohydrates</a>
                     </div>
-                    <img src="{{ pr['d1m1']['image'] }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ pr['d1m1']['label'] }}</h5>
-                        <p>Ingredients:</p>
+                </div>
+
+                <div class="col-10 border">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            <div class="card-deck">
+                                <div class="card">
+                                <img src="{{ pr['d1m1']['image'] }}" class="card-img-top p-1 rounded" alt="...">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title font-weight-normal">{{ pr['d1m1']['label']}}</h6>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                                </div>
+                                <div class="card">
+                                <img src="{{ vr['d1m1']['image'] }}" class="card-img-top p-1 rounded" alt="...">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ vr['d1m1']['label']}}</h6>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                                </div>
+                                <div class="card">
+                                <img src="{{ cr['d1m1']['image'] }}" class="card-img-top p-1 rounded alt="...">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ cr['d1m1']['label']}}</h6>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+                            <div class="card mt-1 mb-1" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ pr['d1m1']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ pr['d1m1']['label']}}</h6>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+
+                            <div class="card mb-3" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ vr['d1m1']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ vr['d1m1']['label']}}</h6>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+
+                            <div class="card mb-3" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="{{ cr['d1m1']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ cr['d1m1']['label']}}</h6>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
 
                     </div>
                 </div>
-                <!-- end of card -->
-            </div>
-            
-            
-            <div class="col card-deck">
-                {% if mealNum == 2 %}
-                <div class="card">
-                    <div class="card-footer">
-                        <small class="text-muted">day1.2</small>
-                    </div>
-                    <img src="{{ pr['d1m2']['image'] }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ pr['d1m2']['label'] }}</h5>
-                        <p>Ingredients:</p>
+            </div>  
 
-                    </div>
+        </div>
+    </div>
+    <!-- end of day2 meal 1 -->
+
+    <!-- day 2 meal 2 -->
+    {% if mealNum == 2 %}
+    <div class="row mb-1">
+        <div class="col-1">
+            <span class="material-icons ml-3">
+                local_dining
+                <!-- wb_sunny -->
+                <!-- today -->
+                </span>
+        </div>
+        <div class="col-11">
+            <div class="card">
+                <div class="card-header">
+                Meal Two
                 </div>
-                {% endif %}
-                <!-- end of card -->
-            </div>
-            
-        {% endif %}
-        <!-- end of day1 -->
+                <div class="card-body bg-light">
+                    <div class="row ml-1 mr-1 ">
+                        <div class="col-2">
+                            <div class="nav flex-column nav-pills mt-5" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active text-secondary mt-1" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">OVERVIEW</a>
+                                <a class="nav-link text-secondary mt-1" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">  protein</a>
+                                <a class="nav-link text-secondary mt-1" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> vegetables</a>
+                                <a class="nav-link text-secondary mt-1" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"> carbohydrates</a>
+                            </div>
+                        </div>
+        
+                        <div class="col-10">
+                            <div class="tab-content border" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                    <div class="card-deck">
+                                        <div class="card">
+                                        <img src="{{ pr['d1m2']['image'] }}" class="card-img-top p-1 rounded" alt="...">
+                                        <div class="card-body">
+                                            <h6 class="card-title font-weight-normal">{{ pr['d1m2']['label']}}</h6>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">Last updated 3 mins ago</small>
+                                        </div>
+                                        </div>
+                                        <div class="card">
+                                        <img src="{{ vr['d1m2']['image'] }}" class="card-img-top p-1 rounded" alt="...">
+                                        <div class="card-body">
+                                            <h6 class="card-title">{{ vr['d1m2']['label']}}</h6>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">Last updated 3 mins ago</small>
+                                        </div>
+                                        </div>
+                                        <div class="card">
+                                        <img src="{{ cr['d1m2']['image'] }}" class="card-img-top p-1 rounded alt="...">
+                                        <div class="card-body">
+                                            <h6 class="card-title">{{ cr['d1m2']['label']}}</h6>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">Last updated 3 mins ago</small>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
-        <!-- day2 -->
-        {% if dayNum >= 2 %}
-            <div col>
-                <p>day2</p>
-            </div>
+                                    <div class="card" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img src="{{ pr['d1m2']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title">{{ pr['d1m2']['label']}}</h6>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-            <div class="col card-deck">
-                <div class="card">
-                    <div class="card-footer">
-                        <small class="text-muted">day2.1</small>
-                    </div>
-                    <img src="{{ pr['d2m1']['image'] }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ pr['d2m1']['label'] }}</h5>
-                        <p>Ingredients:</p>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
 
-                    </div>
+                                    <div class="card" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img src="{{ vr['d1m2']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title">{{ vr['d1m2']['label']}}</h6>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+
+                                    <div class="card" style="max-width: 100%; background:linear-gradient(135deg, #E3E3E3 0%,#abafb4 100%);">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img src="{{ cr['d1m2']['image'] }}" class="card-img-top rounded p-2" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title">{{ cr['d1m2']['label']}}</h6>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
                 </div>
-                <!-- end of card -->
             </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- end day 2 meal 2 -->
 
-            
-            <div class="col card-deck">
-                {% if mealNum == 2 %}
-                <div class="card">
-                    <div class="card-footer">
-                        <small class="text-muted">day2.2</small>
-                    </div>
-                    <img src="{{ pr['d2m2']['image'] }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ pr['d2m2']['label'] }}</h5>
-                        <p>Ingredients:</p>
- 
-                    </div>
-                </div>
-                {% endif %}
-                <!-- end of card -->
-            </div>
-        {% endif %}
-        <!-- end of day2 -->
+{% endif %}
+<!-- ========== -->
+<!-- End day2 -->
+<!-- ========== -->
 
+
+
+
+
+
+
+    <!-- ===================================================================== -->
         <!-- day3 -->
         {% if dayNum >= 3 %}
-            <div col>
+        <div class="row mb-4">
+            <div class="col-2">
                 <p>day3</p>
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 <div class="card">
                     <div class="card-footer">
                         <small class="text-muted">day3.1</small>
@@ -119,7 +643,7 @@
                 <!-- end of card -->
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 {% if mealNum == 2 %}
                 <div class="card">
                     <div class="card-footer">
@@ -135,16 +659,20 @@
                 {% endif %}
                 <!-- end of card -->
             </div>
+        </div>
         {% endif %}
         <!-- end of day3 -->
+    
 
+    
         <!-- day4 -->
         {% if dayNum >= 4 %}
-            <div col>
+        <div class="row mb-4">
+            <div class="col-2">
                 <p>day4</p>
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 <div class="card">
                     <div class="card-footer">
                         <small class="text-muted">day4.1</small>
@@ -159,7 +687,7 @@
                 <!-- end of card -->
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 {% if mealNum == 2 %}
                 <div class="card">
                     <div class="card-footer">
@@ -175,16 +703,18 @@
                 {% endif %}
                 <!-- end of card -->
             </div>
+        </div>
         {% endif %}
         <!-- end of day4 -->
 
         <!-- day5 -->
         {% if dayNum >= 5 %}
-            <div col>
+        <div class="row mb-4">
+            <div class="col-2">
                 <p>day5</p>
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 <div class="card">
                     <div class="card-footer">
                         <small class="text-muted">day5.1</small>
@@ -199,7 +729,7 @@
                 <!-- end of card -->
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 {% if mealNum == 2 %}
                 <div class="card">
                     <div class="card-footer">
@@ -215,16 +745,18 @@
                 {% endif %}
                 <!-- end of card -->
             </div>
+        </div>
         {% endif %}
         <!-- end of day5 -->
 
         <!-- day6 -->
         {% if dayNum >= 6 %}
-            <div col>
+        <div class="row mb-4">
+            <div class="col-2">
                 <p>day6</p>
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 <div class="card">
                     <div class="card-footer">
                         <small class="text-muted">day6.1</small>
@@ -239,7 +771,7 @@
                 <!-- end of card -->
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 {% if mealNum == 2 %}
                 <div class="card">
                     <div class="card-footer">
@@ -255,16 +787,18 @@
                 {% endif %}
                 <!-- end of card -->
             </div>
+        </div>
         {% endif %}
         <!--end of day6 -->
 
         <!-- day7 -->
         {% if dayNum >= 7 %}
-            <div col>
+        <div class="row mb-4">
+            <div class="col-2">
                 <p>day7</p>
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 <div class="card">
                     <div class="card-footer">
                         <small class="text-muted">day7.1</small>
@@ -279,7 +813,7 @@
                 <!-- end of card -->
             </div>
 
-            <div class="col card-deck">
+            <div class="col-5 card-deck">
                 {% if mealNum == 2 %}
                 <div class="card">
                     <div class="card-footer">
@@ -295,14 +829,13 @@
                 {% endif %}
                 <!-- end of card -->
             </div>
+        </div>
         {% endif %}
         <!-- end of day7 -->
 
-    </div>
-    <!-- end of row -->
-
 </div>
 <!-- end of container -->
+
 
 {% endblock %}
 

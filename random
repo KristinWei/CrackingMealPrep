@@ -141,7 +141,7 @@ try:
 
 $ flask db stamp head  # To set the revision in the database to the head, without performing any migrations. You can change head to the required change you want.
 $ flask db migrate     # To detect automatically all the changes.
-$ flask db upgrade     # To apply all the changes.
+$ flask db migrate     # To apply all the changes.
 
 
                         <!-- {% for ingredient in result['hits'][1]['recipe']['ingredientLines'] %}
@@ -235,3 +235,117 @@ def addcarb():
 
     return redirect(url_for('ingredients'))
 
+
+
+        <section class="mbr-slider mbr-section mbr-section__container carousel slide mbr-section-nopadding mbr-after-navbar" data-ride="carousel" data-keyboard="false" data-wrap="true" data-interval="5000" id="slider-1">
+            <div>
+                <div>
+                    <div>
+                        <ol class="carousel-indicators">
+                            <li data-app-prevent-settings="" data-target="#slider-1" data-slide-to="0" class="active"></li>
+                            <li data-app-prevent-settings="" data-target="#slider-1" data-slide-to="1" class=""></li>
+                            <li data-app-prevent-settings="" data-target="#slider-1" class="" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                            <div class="mbr-section mbr-section-hero carousel-item dark center mbr-section-full" data-bg-video-slide="false" style="background: black">
+                                <div class="mbr-table-cell">
+                                    <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(89, 80, 76);"></div>
+                                    <div class="container-slide container">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-8 col-md-offset-2 text-xs-center">
+                                                <h2 class="mbr-section-title display-1">BOOTSTRAP CAROUSEL &amp; SLIDER</h2>
+                                                <p class="mbr-section-lead lead">Create responsive image sliders for your website in a few clicks, without coding! Bootstrap Slider is totally free for personal and commercial use.</p>
+        
+                                                <div class="mbr-section-btn"><a class="btn btn-lg btn-danger" href="https://mobirise.com/bootstrap-carousel.zip">DOWNLOAD CAROUSEL</a>  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mbr-section mbr-section-hero carousel-item dark center mbr-section-full" data-bg-video-slide="false" style="background: grey">
+                                <div class="mbr-table-cell">
+                                    <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(89, 80, 76);"></div>
+                                    <div class="container-slide container">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-8 col-md-offset-2 text-xs-center">
+                                                <h2 class="mbr-section-title display-1">BOOTSTRAP CAROUSEL &amp; SLIDER</h2>
+                                                <p class="mbr-section-lead lead">Create responsive image sliders for your website in a few clicks, without coding! Bootstrap Slider is totally free for personal and commercial use.</p>
+        
+                                                <div class="mbr-section-btn"><a class="btn btn-lg btn-danger" href="https://mobirise.com/bootstrap-carousel.zip">DOWNLOAD CAROUSEL</a>  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mbr-section mbr-section-hero carousel-item dark center mbr-section-full active" data-bg-video-slide="false" style="background:cornsilk;">
+                                <div class="mbr-table-cell">
+                                    <div class="mbr-overlay" style="background-color: rgb(49, 47, 46);"></div>
+                                    <div class="container-slide container">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-8 col-md-offset-1">
+                                                <h2 class="mbr-section-title display-1">BOOTSTRAP SLIDER FREE DOWNLOAD</h2>
+                                                <p class="mbr-section-lead lead">Download the Bootstrap Slideshow now and add image, video or content sliders to your website extremely quickly and easily, without any coding skills.</p>
+        
+                                                <div class="mbr-section-btn"><a class="btn btn-lg btn-danger" href="https://mobirise.com/bootstrap-carousel.zip">DOWNLOAD CAROUSEL</a> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <a data-app-prevent-settings="" class="left carousel-control" role="button" data-slide="prev" href="#slider-1">
+                            <span class="carousel-control-prev-icon" aria-hidden="true">
+                                ::before
+                            </span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a data-app-prevent-settings="" class="right carousel-control" role="button" data-slide="next" href="#slider-1">
+                            <span class="carousel-control-next-icon" aria-hidden="true">
+                                ::before
+                            </span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    
+
+<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+  </ol>
+
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <img src="..." class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      </div>
+    </div>
+    
+  </div>
+
+  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+
+  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+
+</div>
