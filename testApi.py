@@ -138,6 +138,7 @@ def generate():
         proRcp = recipeDict(Ingredient, Limit, 'pro')
         vegRcp = recipeDict(Ingredient, Limit, 'veg')
         carbRcp = recipeDict(Ingredient, Limit, 'carb')
+        # print(type(proRcp['d1m1']['quantity']))
 
     except atLeastError:
         flash("at least one input for each category")

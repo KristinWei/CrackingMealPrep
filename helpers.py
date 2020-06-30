@@ -1,4 +1,5 @@
 import requests, json, random, time
+from decimal import Decimal
 
 def deleteAllData(db, Ingredient, Limit):
     db.session.query(Ingredient).delete()
@@ -31,7 +32,12 @@ def atLeastOne(Ingredient):
 def isValidInput(tp, added, db, Ingredient, Limit):
     apiID = '1ddd0896'
     apiKEY = '58ef01156cda25a59462f34755cb565d'
-    addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=100".format(apiID, apiKEY, added)
+    if(tp == "veg"):
+        addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=100&diet=low-carb&health=vegan".format(apiID, apiKEY, added)
+    elif (tp == 'carb'):
+        addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=100&&health=vegetarian".format(apiID, apiKEY, added)
+    else:
+        addURL = "https://api.edamam.com/search?app_id={0}&app_key={1}&q={2}&to=100&diet=high-protein".format(apiID, apiKEY, added)
 
     callBack = requests.get(addURL).json()
     # reach hit limit
@@ -86,11 +92,29 @@ def generateList(Ingredient, Limit, tp):
 
 
 def randomNum(count):
+
     if count < 100:
         r = random.randint(0, count-1)
     else:
         r = random.randint(0, 99)
     return r
+
+
+def processNumber(recipeDict):
+    recipeDict['yield'] = int(recipeDict['yield'])
+    y = recipeDict['yield']
+    recipeDict['calories'] = int(recipeDict['calories'] / y)
+    recipeDict['totalWeight'] = int(recipeDict['totalWeight'] / y)
+
+    recipeDict['ingNum'] = len(recipeDict['ingredientLines'])
+
+    for key, value in recipeDict['totalNutrients'].items():
+        value['quantity'] = int(value['quantity'] / y)
+    
+    for key, value in recipeDict['totalDaily'].items():
+        value['quantity'] = int(value['quantity'] / y)
+
+    return recipeDict
 
 
 def oneMealDict(Ingredient, Limit, tpList):
@@ -107,6 +131,7 @@ def oneMealDict(Ingredient, Limit, tpList):
         if(day <= dayNum(Limit)):
             # store recipe label for now
             result['d{}m1'.format(day)] = data['hits'][r]['recipe']
+            result['d{}m1'.format(day)] = processNumber(result['d{}m1'.format(day)])
             day += 1
 
     return result
@@ -129,9 +154,11 @@ def twoMealDict(Ingredient, Limit, tpList):
         if(day <= dayNum(Limit)):
             if( m == 1):
                 result['d{}m1'.format(day)] = data['hits'][r]['recipe']
+                result['d{}m1'.format(day)] = processNumber(result['d{}m1'.format(day)])
                 m = 2
             else:
                 result['d{}m2'.format(day)] = data['hits'][r]['recipe']
+                result['d{}m1'.format(day)] = processNumber(result['d{}m1'.format(day)])
                 m = 1
                 day += 1
         
@@ -143,10 +170,10 @@ def recipeDict(Ingredient, Limit, tp):
     tpList = generateList(Ingredient, Limit, tp)
     meal = mealNum(Limit)
 
-
     if (meal == 1):
         return oneMealDict(Ingredient, Limit, tpList)
-    return twoMealDict(Ingredient, Limit, tpList)
+    else:
+        return twoMealDict(Ingredient, Limit, tpList)
 
 
 
