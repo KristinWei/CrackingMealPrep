@@ -253,153 +253,118 @@
                             </div>
 
                         </div>
+
                         <!-- vegetables tab -->
                         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-
                             <div class="card mb-3 bg-light" style="max-width: 100%;">
                                 <div class="row no-gutters">
 
+                                    <!-- Image Display -->
                                     <div class="col-md-4">
                                         <img src="{{ vr['d1m1']['image'] }}" class="card-img-top rounded p-2" alt="...">
                                     </div>
-
+                                    <!-- Info Display -->
                                     <div class="col-md-8">
-                                        <!-- Info Display -->
                                         <div class="card-body p-2 border border">
-
-                                            <h5 class="card-title mb-1 text-center text-secondary border">{{ vr['d1m1']['label']}}</h5>
-
+                                            <!-- title -->
+                                            <h5 class="card-title mb-1 text-center text-secondary">{{ vr['d1m1']['label']}}</h5>
+                                            <!-- other details -->
                                             <div class="container mt-0 text-secondary border border-light">
                                                 <!-- minor details -->
-                                                <div class="row d-flex justify-content-center font-weight-light border border-info">
-                                                    <div class="border">{{ vr['d1m1']['ingNum'] }} Ingredients</div>
-                                                    <div class="border pl-2">Cooking Instruction</div>
-                                                    <div class="border pl-2">Yield: {{ pr['d1m1']['yield'] }} servings</div>
+                                                <div class="row d-flex justify-content-center font-weight-light border">
+                                                    <div class="border border-0">{{ vr['d1m1']['ingNum'] }} Ingredients</div>
+                                                    <div class="border pl-2 border-0">Cooking Instruction</div>
+                                                    <div class="border pl-2 border-0">Yield: {{ pr['d1m1']['yield'] }} servings</div>
                                                 </div>
-
                                                 <!-- nutrition & lebels header -->
-                                                <div class="row text-center border border-success">
+                                                <div class="row text-center border">
                                                     <div class="col-8 p-1 border">Nutrition</div>
                                                     <div class="col-4 p-1 border">Labels</div>
                                                 </div>
-                    
-            
+                                                
                                                 <!-- nutrition&tabs row-->
-                                                <div class="row border border-info">
-
+                                                <div class="row border">
+                                                    <!-- <div class="col-4 d-flex flex-column pl-0 pr-0 border borde-light"> -->
+                                                    
                                                     <!-- nutrition col 1 -->
                                                     <div class="col-4 d-flex flex-column pl-0 pr-0 border-0 borde-light">
                                                         <!-- calories -->
-                                                        <div class="d-flex text-center justify-content-end border">
-                                                            <div class="border">Calories: {{ pr['d1m1']['calories'] }}</div>
+                                                        <div class="d-flex text-center justify-content-end">
+                                                            <div class="border border-0">Calories: {{ pr['d1m1']['calories'] }}</div>
                                                         </div>
                                                         <!-- protein  -->
-                                                        <div class="d-flex ml-3 border">
-                                                            <button type="button" class="btn btn-outline-info btn-sm pt-0 pb-0">protein</button>
+                                                        <div class="d-flex flex-fill justify-content-center border">
+                                                            <button type="button" class="btn btn-outline-info btn-sm border-0">protein</button>
                                                         </div>
-                                                        <!-- carb dropdown -->
-                                                        <div class="d-flex ml-3 border">
-                                                            <button class="btn btn-outline-success btn-sm dropdown-toggle pt-0 pb-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">carbs</button>
-                                                              <div class="dropdown-menu p-4 text-muted" style="max-width: 200px;">
-                                                                <p>
-                                                                    Some example text that's free-flowing within the dropdown menu.
-                                                                  </p>
-                                                                  <p class="mb-0">
-                                                                    And this is more example text.
-                                                                  </p>
-                                                              </div>
+                                                        <!-- carbs dropdown -->
+                                                        <div class="d-flex flex-fill justify-content-center border">
+                                                            <button type="button" class="btn btn-outline-success btn-sm border-0">carbohydrates</button>
                                                         </div>
                                                         <!-- fat dropdown -->
-                                                        <div class="d-flex ml-3 border">
-                                                            <button class="btn btn-outline-success btn-sm dropdown-toggle pt-0 pb-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">fat</button>
-                                                              <div class="dropdown-menu p-4 text-muted" style="max-width: 200px;">
-                                                                <p>
-                                                                    Some example text that's free-flowing within the dropdown menu.
-                                                                  </p>
-                                                                  <p class="mb-0">
-                                                                    And this is more example text.
-                                                                  </p>
-                                                              </div>
-                                                        </div>
-                                                        <!-- others dropdown -->
-                                                        <div class="d-flex ml-3 border">
-                                                            <button class="btn btn-outline-success btn-sm dropdown-toggle pt-0 pb-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">others</button>
-                                                              <div class="dropdown-menu p-4 text-muted" style="max-width: 200px;">
-                                                                <p>
-                                                                    Some example text that's free-flowing within the dropdown menu.
-                                                                  </p>
-                                                                  <p class="mb-0">
-                                                                    And this is more example text.
-                                                                  </p>
-                                                              </div>
+                                                        <div class="d-flex flex-fill justify-content-center border">
+                                                            <button type="button" class="btn btn-outline-warning btn-sm border-0">fat</button>
                                                         </div>
                                                     </div>
+                                                    <!-- </div> -->
 
                                                     <!-- nutrition col 2 -->
                                                     <div class="col-4 d-flex flex-column pl-0 pr-0 border-0 border-secondary">
-                                                        <!-- serving -->
-                                                        <div class="d-flex flex-fill text-center pl-1 justify-content-start border">
-                                                            <div class="border">Per serving</div>
+                                                        <!-- per serving -->
+                                                        <div class="d-flex text-center pl-1 justify-content-start">
+                                                            <div class="border border-0">per serving</div>
                                                         </div>
-
+                                                        <!-- protein data -->
                                                         <div class="d-flex flex-fill justify-content-center border">
-                                                            <small>
+                                                            <small class="mr-2">
                                                                 {{ vr['d1m1']['totalNutrients']['PROCNT']['quantity'] }}g 
+                                                            </small>
+                                                            <small>
                                                                 {{ vr['d1m1']['totalDaily']['PROCNT']['quantity'] }}%
                                                             </small>
                                                         </div>
-
+                                                        <!-- carbs data -->
                                                         <div class="d-flex flex-fill justify-content-center border">
+                                                            <small class="mr-2">
+                                                                {{ vr['d1m1']['totalNutrients']['CHOCDF']['quantity'] }}g 
+                                                            </small>
                                                             <small>
-                                                                {{ vr['d1m1']['totalNutrients']['PROCNT']['quantity'] }}g 
-                                                                {{ vr['d1m1']['totalDaily']['PROCNT']['quantity'] }}%
+                                                                {{ vr['d1m1']['totalDaily']['CHOCDF']['quantity'] }}%
                                                             </small>
                                                         </div>
-
+                                                        <!-- fat data -->
                                                         <div class="d-flex flex-fill justify-content-center border">
+                                                            <small class="mr-2">
+                                                                {{ vr['d1m1']['totalNutrients']['FAT']['quantity'] }}g 
+                                                            </small>
                                                             <small>
-                                                                {{ vr['d1m1']['totalNutrients']['PROCNT']['quantity'] }}g 
-                                                                {{ vr['d1m1']['totalDaily']['PROCNT']['quantity'] }}%
+                                                                {{ vr['d1m1']['totalDaily']['FAT']['quantity'] }}%
                                                             </small>
                                                         </div>
-
-                                                        <div class="d-flex flex-fill justify-content-center border">
-                                                            <small>
-                                                                {{ vr['d1m1']['totalNutrients']['PROCNT']['quantity'] }}g 
-                                                                {{ vr['d1m1']['totalDaily']['PROCNT']['quantity'] }}%
-                                                            </small>
-                                                        </div>
-
-                                                        
-
                                                     </div>
-
                                                     <!-- label col 3 -->
-                                                    <div class="col-4 d-flex  pl-0 pr-0 align-content-start flex-wrap border border-dark">
-                                                        <span class="badge badge-pill badge-secondary">Secondary</span>
-                                                        <span class="badge badge-pill badge-primary">Primary</span>
-                                                        <span class="badge badge-pill badge-secondary">Secondary</span>
-                                                        <span class="badge badge-pill badge-success">Success</span>
-                                                        <span class="badge badge-pill badge-danger">Danger</span>
-                                                        <span class="badge badge-pill badge-warning">Warning</span>
-                                                        <span class="badge badge-pill badge-info">Info</span>
-                                                        <span class="badge badge-pill badge-light">Light</span>
-                                                        <span class="badge badge-pill badge-dark">Dark</span>
+                                                    <div class="col-4 d-flex flex-column pl-0 pr-0 align-content-start flex-wrap border">
+                                                        <div class="d-flex flex-fill text-center pl-1 align-content-stretch flex-wrap border">
+                                                            <span class="badge badge-pill badge-info"> {{ vr['d1m1']['dietLabels'][0] }}</span>
+                                                            <span class="badge badge-pill badge-warning">{{ vr['d1m1']['cautions'][0] }}</span>
+                                                            <span class="badge badge-pill badge-success">{{ vr['d1m1']['healthLabels'][0] }}</span>
+                                                            <span class="badge badge-pill badge-secondary">{{ vr['d1m1']['healthLabels'][1] }}</span>
+                                                        </div>
+
+                                                        <div class="d-flex flex-fill text-center justify-content-center border">
+                                                            <a class="btn mb-4 mt-4 btn-outline-primary" role="button" href="#">See Details</a>
+                                                        </div>
+                                                        
                                                     </div>
                                                     
-
                                                 </div>
                                                 <!-- end of nutrition&tabs row -->
                                             </div>
-
                                         </div>
                                     </div>
-
+                                
                                 </div>
                             </div>
-
                         </div>
-
 
                         <!-- carbohydrates tab -->
                         <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
@@ -674,6 +639,7 @@
 
                 <div class="col-10 border">
                     <div class="tab-content" id="v-pills-tabContent">
+
                         <div class="tab-pane fade show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                             <div class="card-deck">
                                 <div class="card">

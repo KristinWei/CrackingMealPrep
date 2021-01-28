@@ -113,6 +113,9 @@ def processNumber(recipeDict):
     
     for key, value in recipeDict['totalDaily'].items():
         value['quantity'] = int(value['quantity'] / y)
+    
+    # recipeDict['cuisineType'] = json.dumps(recipeDict['cuisineType']);
+    
 
     return recipeDict
 

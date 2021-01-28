@@ -144,7 +144,7 @@ def generate():
         flash("at least one input for each category")
         return redirect(url_for('ingredients'))
         
-    return render_template('generate.html', mealNum=mealNum(Limit), dayNum=dayNum(Limit), pr=proRcp, vr=vegRcp, cr=carbRcp)
+    return render_template('generate.html', mealNum=mealNum(Limit), dayNum=dayNum(Limit), pr=proRcp, vr=vegRcp, cr=carbRcp, name="d1m1")
 
 
 
