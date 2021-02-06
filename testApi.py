@@ -5,10 +5,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exc
 from flask_migrate import Migrate
 from helpers import *
-import requests, random, json, time, ast
+import requests, random, json, time, ast, os
 
 app = Flask(__name__)
 
+# set up sqlite database
 app.config['SECRET_KEY'] = 'hard to guess string'
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ingredient.sqlite"
@@ -50,7 +51,6 @@ class atMostError(Exception):
 # ==================
 @app.route('/')
 def index():
-
     deleteAllData(db, Ingredient, Limit)
     return render_template('index.html')
 
@@ -94,7 +94,6 @@ def add():
         if 'pro' in request.form:
             added = request.form['pro']
             tp = "pro"
-            print(added)
         elif 'veg' in request.form:
             added = request.form['veg']
             tp = "veg"

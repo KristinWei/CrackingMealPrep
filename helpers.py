@@ -1,6 +1,7 @@
 import requests, json, random, time
 from decimal import Decimal
 
+# delete all data 
 def deleteAllData(db, Ingredient, Limit):
     db.session.query(Ingredient).delete()
     db.session.query(Limit).delete()
@@ -105,17 +106,19 @@ def processNumber(recipeDict):
     y = recipeDict['yield']
     recipeDict['calories'] = int(recipeDict['calories'] / y)
     recipeDict['totalWeight'] = int(recipeDict['totalWeight'] / y)
+    # recipeDict['calories'] = int(recipeDict['calories'])
+    # recipeDict['totalWeight'] = int(recipeDict['totalWeight'])
 
     recipeDict['ingNum'] = len(recipeDict['ingredientLines'])
 
     for key, value in recipeDict['totalNutrients'].items():
         value['quantity'] = int(value['quantity'] / y)
+        # value['quantity'] = int(value['quantity'])
+
     
     for key, value in recipeDict['totalDaily'].items():
         value['quantity'] = int(value['quantity'] / y)
-    
-    # recipeDict['cuisineType'] = json.dumps(recipeDict['cuisineType']);
-    
+        # value['quantity'] = int(value['quantity'])    
 
     return recipeDict
 
@@ -134,6 +137,7 @@ def oneMealDict(Ingredient, Limit, tpList):
         if(day <= dayNum(Limit)):
             # store recipe label for now
             result['d{}m1'.format(day)] = data['hits'][r]['recipe']
+            data['hits'][r]['recipe']['uri'] = ing
             result['d{}m1'.format(day)] = processNumber(result['d{}m1'.format(day)])
             day += 1
 
@@ -157,11 +161,13 @@ def twoMealDict(Ingredient, Limit, tpList):
         if(day <= dayNum(Limit)):
             if( m == 1):
                 result['d{}m1'.format(day)] = data['hits'][r]['recipe']
+                data['hits'][r]['recipe']['uri'] = ing
                 result['d{}m1'.format(day)] = processNumber(result['d{}m1'.format(day)])
                 m = 2
             else:
                 result['d{}m2'.format(day)] = data['hits'][r]['recipe']
-                result['d{}m1'.format(day)] = processNumber(result['d{}m1'.format(day)])
+                data['hits'][r]['recipe']['uri'] = ing
+                result['d{}m2'.format(day)] = processNumber(result['d{}m2'.format(day)])
                 m = 1
                 day += 1
         
